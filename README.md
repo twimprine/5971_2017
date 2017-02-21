@@ -18,10 +18,10 @@ It gets code updates from development branch.
  It gets codes from individual developer’s branch.  It is the branch for hot-fixes.(Happens once we complete a cycle and have another development branch as current version of application)  Branch is unstable (Can break as developers are constantly merging to it.)     
 
  
-4.Individual Branches
+-> Individual Branches
 Each developer works on their individual branch.
     
-5.Merging Steps 
+-> Merging Steps 
 Merge codes from development to your own branch.    
 
 Fix any issues you encounter after the merge    
