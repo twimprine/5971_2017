@@ -1,6 +1,6 @@
 # 5971_2017
 
-Please following best practices for pushing code changes to this repository.
+#Please following best practices for pushing code changes to this repository.
 Disclaimer: Use standard Git commands to perform actions. Detailed Documentation for that can be found
 here. https://git-scm.com/
 
@@ -38,11 +38,19 @@ Checkout development branch to your new branch "Development_yourname".
 #Steps to make changes and push to development.
 
 git add . &&
+
 git commit -am "comment"&&
+
 git checkout Development && 
+
 git pull origin Development && 
+
 git merge Development_yourname && 
+
 git push origin Development&&
+
 git checkout Development_yourname&&
+
 git merge Development &&
+
 git push origin Development_yourname
