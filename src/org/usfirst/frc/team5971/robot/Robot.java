@@ -1,8 +1,13 @@
+//this code was made by Quade Leonard
+
 package org.usfirst.frc.team5971.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -13,59 +18,63 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	RobotDrive myRobot;
+	RobotDrive myRobotDriver;
+
+	Button button1;
 	Joystick stick;
 	int counterLoop;
 	int counterLoop2;
 	int counterLoop3;
 	int counterLoop4;
+	int counterLoop5;
+	int counterLoop6;
+	Joystick leftJoy;
+	static Subsystem ropeClimber;
 	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	myRobot = new RobotDrive(0,2,1,3);
+    
+    	leftJoy = new Joystick (6);
+    	button1= new JoystickButton (leftJoy, 6);
+    	myRobotDriver = new RobotDrive(0,2,1,3);
+
     	stick = new Joystick(0);
-    	myRobot.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-    	myRobot.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-    	myRobot.setInvertedMotor(RobotDrive.MotorType.kRearLeft,true);
-    	myRobot.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+    	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+    	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+    	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kRearLeft,true);
+    	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+    	ropeClimber= new RopeClimber();
     }
     
     /**
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit(){
-    	counterLoop = 600;
-    	counterLoop2 = 0;
+    	counterLoop = 20;
+    	counterLoop2 = 60;
     	counterLoop3 = 0;
     	counterLoop4 = 0;
+    	counterLoop5 = 0;
+    	counterLoop6 = 0;
     }
 
 
     /**
      * This function is called periodically during autonomous
+     * 1ft = 20 ticks at 0.25 speed
+     * 90 degrees = 200 ticks at 0.25 speed, 0.58 curve
      */
+    
     public void autonomousPeriodic() {
-    	if(counterLoop >300)
-    	{
-    		myRobot.drive(-0.15, 0.0);
-    		
-    		counterLoop--;
-    	}else{
-    		counterLoop--;
-    		if(counterLoop==0){
-    			counterLoop=600;
     	
-    		}
-    		myRobot.drive(0.15, 0.0);
-    	}
-    	
+    if (counterLoop<0);
+    	myRobotDriver.drive(-0.25, 0.0);
     	
     }
-    
-    
+    	
     /**
      * This function is called once each time the robot enters tele-operated mode
      */
@@ -76,7 +85,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        myRobot.arcadeDrive(stick);
+        myRobotDriver.arcadeDrive(stick);
+       button1.whenPressed(new driveUp());
     }
     
     /**
