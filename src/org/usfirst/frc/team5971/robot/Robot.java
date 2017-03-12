@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
     	button1= new JoystickButton (leftJoy, 6);
     	myRobotDriver = new RobotDrive(0,2,1,3);
     	pdp = new PowerDistributionPanel();
+    	CameraServer.getInstance().startAutomaticCapture();
 
     	stick = new Joystick(0);
     	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
