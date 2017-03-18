@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit(){
-    	counterLoop = 20;
-    	counterLoop2 = 60;
+    	counterLoop = 0;
+    	counterLoop2 = 0;
     	counterLoop3 = 0;
     	counterLoop4 = 0;
     	counterLoop5 = 0;
@@ -77,9 +77,20 @@ public class Robot extends IterativeRobot {
     
     public void autonomousPeriodic() {
     	
-    if (counterLoop<0);
-    	myRobotDriver.drive(-0.25, 0.0);
-    	
+	    while (counterLoop < 75000) {
+	    	myRobotDriver.drive(.5, 0.0);
+	    	counterLoop++;
+	    }
+	    try {
+			Thread.sleep(1 * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    while (counterLoop2 < 50000) {
+	    	myRobotDriver.drive(0.25, 1);
+	    	counterLoop2++;
+	    }
     }
     	
     /**
