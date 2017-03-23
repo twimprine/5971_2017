@@ -4,14 +4,14 @@ public class InvertRobot {
 
 boolean isInverted = false;
 
-boolean getStatus {
+public boolean getStatus() {
     return isInverted;
 }
 
-void setStatus {
+public void setStatus() {
     if (isInverted) {
         isInverted = false;
-    else 
+    } else  {
         isInverted = true;
     }
 }

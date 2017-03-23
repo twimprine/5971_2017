@@ -2,15 +2,17 @@
 
 package org.usfirst.frc.team5971.robot;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,11 +22,15 @@ import edu.wpi.first.wpilibj.CameraServer;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	private static final double Kp = 0.05;
+
 	RobotDrive myRobotDriver;
 
 	PowerDistributionPanel pdp;
 	Button button1;
+	Button button7;
 	Joystick stick;
+	Gyro gyro;
 	int counterLoop;
 	int counterLoop2;
 	int counterLoop3;
@@ -42,6 +48,7 @@ public class Robot extends IterativeRobot {
     
     	leftJoy = new Joystick (0);
     	button1= new JoystickButton (leftJoy, 6);
+    	button7 = new JoystickButton(leftJoy, 7);
     	myRobotDriver = new RobotDrive(0,2,1,3);
     	pdp = new PowerDistributionPanel();
     	CameraServer.getInstance().startAutomaticCapture();
@@ -52,6 +59,7 @@ public class Robot extends IterativeRobot {
     	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kRearLeft,true);
     	myRobotDriver.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     	ropeClimber= new RopeClimber();
+    	gyro.reset();
     	
     	pdp.clearStickyFaults();
     }
@@ -77,8 +85,11 @@ public class Robot extends IterativeRobot {
     
     public void autonomousPeriodic() {
     	
+    	gyro.reset();
 	    while (counterLoop < 75000) {
 	    	myRobotDriver.drive(.5, 0.0);
+	    	double angle = gyro.getAngle(); // get current heading
+            myRobotDriver.drive(-1.0, -angle*Kp); // drive towards heading 0
 	    	counterLoop++;
 	    }
 	    try {
@@ -105,6 +116,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         myRobotDriver.arcadeDrive(stick);
        button1.whenPressed(new driveUp());
+       //button7.toggleWhenPressed(InvertRobot.this.setStatus());
     }
     
     /**
